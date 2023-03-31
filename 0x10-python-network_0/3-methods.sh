@@ -1,3 +1,3 @@
 #!/bin/bash
-# Displays the HTTP methods the server will accept
-curl -sI "$1" | grep "Allow" | cut -d' ' -f2-
+# Displays all HTTP methods the server will accept.
+curl -s -I "${1}" | grep "^Allow: .*" | cut -d " " -f 2-
