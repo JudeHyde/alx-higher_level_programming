@@ -1,10 +1,3 @@
 #!/usr/bin/python3
-
-
-nc = 0
-for n in range(122, 96, -1):
-    if n % 2 == 0:
-        nc = n
-    else:
-        nc = n - 32
-    print("{}".format(chr(nc)), end='')
+for ch in reversed(range(97, 123)):
+    print("{:c}".format(ch if (ch % 2 == 0) else (ch - 32)), end='')

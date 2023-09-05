@@ -1,50 +1,58 @@
 #!/usr/bin/python3
-"""Rectangle module.
-
-This module contains a class that defines a rectangle.
-
-"""
+"""This program define a class Rectangle with it attributes"""
 
 
 class Rectangle():
-    """Defines a rectangle."""
+    """
+    A Rectangle Class with the private instance attributes width and height
+    """
 
     def __init__(self, width=0, height=0):
-        """Sets the necessary attributes for the Rectangle object.
-
-        Args:
-            width (int): the width of the rectangle.
-            height (int): the height of the rectangle.
         """
-        self.width = width
+        Constructor of the class Rectangle
+          Args:
+            - width (default = 0): int
+            - heigth (default = 0): int
+        """
         self.height = height
+        self.width = width
 
     @property
     def width(self):
-        """Get or set the width of the rectangle."""
+        """Getter of the property width"""
         return self.__width
 
     @width.setter
     def width(self, value):
-        if type(value) is int:
-            if value >= 0:
-                self.__width = value
-            else:
-                raise ValueError("width must be >= 0")
-        else:
-            raise TypeError("width must be an integer")
+        """
+        Getter of the property value
+          Args:
+            - value: int
+        """
+        if not isinstance(value, int):
+            raise TypeError('width must be an integer')
+
+        if value < 0:
+            raise ValueError('width must be >= 0')
+
+        self.__width = value
 
     @property
     def height(self):
-        """Get or set the height of the rectangle."""
+        """Getter of the property height"""
         return self.__height
 
     @height.setter
     def height(self, value):
-        if type(value) is int:
-            if value >= 0:
-                self.__height = value
-            else:
-                raise ValueError("height must be >= 0")
-        else:
-            raise TypeError("height must be an integer")
+        """
+        Getter of the property value
+          Args:
+            - value: int
+        """
+        if not isinstance(value, int):
+            raise TypeError('height must be an integer')
+
+        if value < 0:
+            raise ValueError('height must be >= 0')
+
+        self.__height = value

@@ -1,21 +1,21 @@
 #!/usr/bin/python3
-"""Square module.
-
-Contains a class Square that inherits from
-Rectangle and some methods.
 """
-Rectangle = __import__('9-rectangle').Rectangle
+This program improves a previous Square
+"""
 
 
-class Square(Rectangle):
-    """Defines the Square class that inherits from Rectangle."""
+PrevSquare = __import__('10-square').Square
+
+
+class Square(PrevSquare):
+    """
+    Improved Class Square
+    """
 
     def __init__(self, size):
-        """Checks and sets the default attributes of Square class."""
-        self.integer_validator("size", size)
-        super().__init__(size, size)
-        self.__size = size
+        """Constructor of the improved Square"""
+        super().__init__(size)
 
     def __str__(self):
-        """Sets the str behaviour."""
-        return "[Square] {:d}/{:d}".format(self.__size, self.__size)
+        """String representation of Square"""
+        return '[Square] {0:d}/{0:d}'.format(self.__size)

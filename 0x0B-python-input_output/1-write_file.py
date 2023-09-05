@@ -1,14 +1,18 @@
 #!/usr/bin/python3
-"""write_file module.
-
-Contains a function that writes a text file.
+"""
+This program writes in a file if doesn't exists create the file
 """
 
 
 def write_file(filename="", text=""):
     """
-    Writes a string to a text file (UTF8) and
-    returns the number of characters written.
+    Write in a file, if doesn't exists create the file
+    Args:
+      - filename: string
+      - text: string
     """
-    with open(filename, 'w') as f:
-        return f.write(text)
+
+    with open(filename, mode="w", encoding="utf-8") as _file:
+        _file.write(text)
+
+    return (len(text))

@@ -1,75 +1,77 @@
 #!/usr/bin/python3
-"""Singly Linked Lists module.
-
-This module contains methods about the creation and hendling of
-SinglyLinkedList and Node objects.
-
+"""This module contains a class that defines a square.
+In the Square class we initialize each object by the
+__init__ method with a private instance variable called
+__size that takes the size variable's value passed as
+argument. Also checks if the size arg has a valid value.
 """
 
 
 class Node():
-    """Defines a node of a singly linked list."""
+    """Node Class."""
 
     def __init__(self, data, next_node=None):
-        """Sets the necessary attributes for the Node object.
-
-        Args:
-            data (int): the value of the node
-            next_node (Node): the next Node
-        """
+        """Initialization of Node Class"""
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
-        """Get or set the data value of a node."""
+        """Data"""
         return self.__data
 
     @data.setter
-    def data(self, value):
-        if type(value) is int:
-            self.__data = value
-        else:
+    def data(self, DataValue):
+        """Set data"""
+        if type(DataValue) != int:
             raise TypeError("data must be an integer")
+        self.__data = DataValue
 
     @property
     def next_node(self):
-        """Get or set the next node of the current node."""
+        """Node"""
         return self.__next_node
 
     @next_node.setter
-    def next_node(self, value):
-        if type(value) is Node or value is None:
-            self.__next_node = value
-        else:
+    def next_node(self, NodeValue):
+        """set Node"""
+        if NodeValue is not None and not isinstance(NodeValue, Node):
             raise TypeError("next_node must be a Node object")
+        self.__next_node = NodeValue
 
 
 class SinglyLinkedList():
-    """Defines a singly linked list"""
-
+    """Class SinglyLinkedList"""
     def __init__(self):
-        """Sets the necessary attributes for the SinglyLinkedList object."""
+        """Initialization of SinglyLinkedList"""
         self.__head = None
 
+    def sorted_insert(self, DataValue):
+        """Inserts a nodes"""
+        NewNode = Node(DataValue)
+        if self.__head is None:
+            self.__head = NewNode
+            return
+        if DataValue < self.__head.data:
+            NewNode.next_node = self.__head
+            self.__head = NewNode
+            return
+        actual = self.__head
+        while DataValue >= actual.data:
+            prev = actual
+            if actual.next_node:
+                actual = actual.next_node
+            else:
+                actual.next_node = NewNode
+                return
+        prev.next_node = NewNode
+        NewNode.next_node = actual
+
     def __str__(self):
-        """Sets the print behavior of the SinglyLinkedList object."""
-        sll_str = ""
-        node = self.__head
-
-        if node is not None:
-            while node is not None:
-                sll_str += str(node.data) + '\n'
-                node = node.next_node
-
-        return sll_str[:-1]
-
-    def sorted_insert(self, value):
-        node = self.__head
-
-        if node is None or self.__head.data >= value:
-            self.__head = Node(value, self.__head)
-        else:
-            while node.next_node is not None and node.next_node.data < value:
-                node = node.next_node
-            node.next_node = Node(value, node.next_node)
+        """Class As a String"""
+        strg = ""
+        actual = self.__head
+        while actual:
+            strg += str(actual.data) + "\n"
+            actual = actual.next_node
+        return strg[:-1]

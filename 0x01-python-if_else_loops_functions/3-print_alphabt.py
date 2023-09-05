@@ -1,11 +1,4 @@
 #!/usr/bin/python3
-
-
-def print_low_alpha_ex():
-    for n in range(97, 123):
-        if n != 101 and n != 113:
-            print('{}'.format(chr(n)), end='')
-
-
-if __name__ == '__main__':
-    print_low_alpha_ex()
+for char in range(26):
+    if char != 4 and char != 16:
+        print("{:s}".format(chr(char + ord("a"))), end="")

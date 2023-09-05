@@ -1,31 +1,28 @@
 #!/usr/bin/python3
-
-
-def standardize_tuple(tup):
-    tup_len = len(tup)
-    if tup_len == 0:
-        return (0, 0)
-    elif tup_len == 1:
-        return (tup[0], 0)
-    else:
-        return (tup[0], tup[1])
-
-
 def add_tuple(tuple_a=(), tuple_b=()):
-    sum1 = 0
-    sum2 = 0
-    tup_a_st = standardize_tuple(tuple_a)
-    tup_b_st = standardize_tuple(tuple_b)
-    sum1 = tup_a_st[0] + tup_b_st[0]
-    sum2 = tup_a_st[1] + tup_b_st[1]
+    len_a = len(tuple_a)
+    len_b = len(tuple_b)
 
-    return (sum1, sum2)
+    if len_a == 0:
+        a1 = 0
+        a2 = 0
+    elif len_a == 1:
+        a1 = tuple_a[0]
+        a2 = 0
+    else:
+        a1 = tuple_a[0]
+        a2 = tuple_a[1]
 
-if __name__ == '__main__':
-    tuple_a = (1, 89)
-    tuple_b = (88, 11)
-    new_tuple = add_tuple(tuple_a, tuple_b)
-    print(new_tuple)
+    if len_b == 0:
+        b1 = 0
+        b2 = 0
+    elif len_b == 1:
+        b1 = tuple_b[0]
+        b2 = 0
+    else:
+        b1 = tuple_b[0]
+        b2 = tuple_b[1]
 
-    print(add_tuple(tuple_a, (1, )))
-    print(add_tuple(tuple_a, ()))
+    new_tuple = (a1 + b1, a2 + b2)
+
+    return (new_tuple)

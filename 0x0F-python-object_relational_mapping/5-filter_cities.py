@@ -1,35 +1,48 @@
 #!/usr/bin/python3
 """
-Script that lists all `cities` in the `cities` table of `hbtn_0e_4_usa`
-where the city's state matches the argument `state name`.
-
-Arguments:
-    mysql username (str)
-    mysql password (str)
-    database name (str)
-    state name (str)
+Takes in the name of a state as an argument and
+lists all cities of that state, using
+the database hbtn_0e_4_usa
 """
 
-import sys
-import MySQLdb
+if __name__ == '__main__':
+    from sys import argv
+    import MySQLdb as mysql
+    import re
 
-if __name__ == "__main__":
-    mySQL_u = sys.argv[1]
-    mySQL_p = sys.argv[2]
-    db_name = sys.argv[3]
+    if (len(argv) != 5):
+        print('Use: username, password, database name, state name')
+        exit(1)
 
-    state_name = sys.argv[4]
+    state_name = ' '.join(argv[4].split())
 
-    # By default, it will connect to localhost:3306
-    db = MySQLdb.connect(user=mySQL_u, passwd=mySQL_p, db=db_name)
-    cur = db.cursor()
+    if (re.search('^[a-zA-Z ]+$', state_name) is None):
+        print('Enter a valid name state (example: California)')
+        exit(1)
 
-    cur.execute("SELECT c.name \
-                 FROM cities c INNER JOIN states s \
-                 ON c.state_id = s.id WHERE s.name = %s\
-                 ORDER BY c.id", (state_name, ))
-    rows = cur.fetchall()
+    try:
+        db = mysql.connect(host='localhost', port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3])
+    except Exception:
+        print('Failed to connect to the database')
+        exit(0)
 
-    for i in range(len(rows)):
-        print(rows[i][0], end=", " if i + 1 < len(rows) else "")
-    print("")
+    cursor = db.cursor()
+
+    cuantity = cursor.execute("""SELECT c.name FROM cities as c
+                      INNER JOIN states as s
+                      ON c.state_id = s.id
+                      WHERE s.name = '{:s}'
+                      ORDER BY c.id ASC;""".format(state_name))
+
+    result_query = cursor.fetchall()
+
+    final = []
+
+    for i in range(cuantity):
+        final.append(result_query[i][0])
+
+    print(', '.join(final))
+
+    cursor.close()
+    db.close()

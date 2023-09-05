@@ -1,32 +1,41 @@
 #!/usr/bin/python3
 """
-Script that lists all values in the `states` table of `hbtn_0e_0_usa`
-where `name` matches the argument `state name searched`.
-
-Arguments:
-    mysql username (str)
-    mysql password (str)
-    database name (str)
-    state name searched (str)
+Displays all values in the states table of
+hbtn_0e_0_usa where name matches the argument.
+(Safe from SQL Injection)
 """
 
-import sys
-import MySQLdb
+if __name__ == '__main__':
+    from sys import argv
+    import MySQLdb as mysql
+    import re
 
-if __name__ == "__main__":
-    mySQL_u = sys.argv[1]
-    mySQL_p = sys.argv[2]
-    db_name = sys.argv[3]
+    if (len(argv) != 5):
+        print('Use: username, password, database name, state name')
+        exit(1)
 
-    searched_name = sys.argv[4]
+    searched = ' '.join(argv[4].split())
 
-    # By default, it will connect to localhost:3306
-    db = MySQLdb.connect(user=mySQL_u, passwd=mySQL_p, db=db_name)
-    cur = db.cursor()
+    if (re.search('^[a-zA-Z ]+$', searched) is None):
+        print('Enter a valid name state (example: Arizona)')
+        exit(1)
 
-    cur.execute("SELECT * FROM states WHERE name = %s ORDER BY id",
-                (searched_name, ))
-    rows = cur.fetchall()
+    try:
+        db = mysql.connect(host='localhost', port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3])
+    except Exception:
+        print('Failed to connect to the database')
+        exit(0)
 
-    for row in rows:
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM states \
+                    WHERE name = '{:s}' ORDER BY id ASC;".format(searched))
+
+    result_query = cursor.fetchall()
+
+    for row in result_query:
         print(row)
+
+    cursor.close()
+    db.close()
