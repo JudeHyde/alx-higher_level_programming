@@ -27,4 +27,4 @@ if (__name__ == "__main__"):
         result = mul(num1, num2)
     else:
         result = div(num1, num2)
-    print("{:d} {:s} {:d} = {:d}".format(num1, operator, num2, result))
+    print(f"{num1} {operator} {num2} = {result}")
